@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
-import './LoginView.tsx'
-
 
 const App: React.FC = () => {
   return (
