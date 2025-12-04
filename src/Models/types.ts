@@ -7,7 +7,6 @@ interface User{
     email: string; 
     userType: UserType;
     name: string; 
-    schedule: Array<number>;
 }
 
 interface AuthState {
