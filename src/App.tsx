@@ -1,21 +1,53 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import './index.css'
+//Controllers
 import {useAuthController} from './Controllers/useAuthController'
+import {useAppointmentsController} from './Controllers/userAppointmentController'
+import {useOfficeHoursController} from './Controllers/useOfficeHourController'
+import {useNotificationController} from './Controllers/useNotificationController'
+//Views
 import {LoginView} from './Views/LoginView'
+import {StudentDashboardView} from './Views/StudentDashboardView'
+import {} from './Views/ProfessorDashboardView'
 
 const App: React.FC = () => {
- const authController = useAuthController();
-  //const officeHoursController = useOfficeHoursController();
-  /*const appointmentsController = useAppointmentsController(
-    authController.authState.user?.id || null,
-    authController.authState.user?.userType || 'student'
-  );*/
+  //initializing controllers
+  const authController = useAuthController();
+    const officeHoursController = useOfficeHoursController();
+    const appointmentsController = useAppointmentsController(
+      authController.authState.user?.id || null,
+      authController.authState.user?.userType || 'student'
+    );
+
+  useEffect(() => {
+    if (authController.authState.isAuthenticated) {
+      officeHoursController.loadOfficeHours();
+      appointmentsController.loadAppointments();
+    }
+  }, [authController.authState.isAuthenticated]);
+
+  //Login Page if user is not authenticated
   if (!authController.authState.isAuthenticated) {
     return (
       <LoginView
         onLogin={authController.login}
         isLoading={authController.isLoading}
+      />
+    );
+  }
+  const { user } = authController.authState;
+
+  //Student Dashboard
+  if (user?.userType === 'student') {
+    return (
+      <StudentDashboardView
+        user={user}
+        officeHours={officeHoursController.officeHours}
+        appointments={appointmentsController.appointments}
+        onBookAppointment={appointmentsController.bookAppointment}
+        onCancelAppointment={appointmentsController.cancelAppointment}
+        onLogout={authController.logout}
       />
     );
   }
