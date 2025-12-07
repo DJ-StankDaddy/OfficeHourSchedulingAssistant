@@ -1,6 +1,14 @@
-import React, { useState } from 'react';
-import { GraduationCap, BookOpen, Mail, Lock, ArrowRight, Calendar, Clock, MapPin, Users, Bell, CheckCircle, Plus, X, Search } from 'lucide-react';
-import {UserType} from '../Models/types'
+import React, { useState } from "react";
+import {
+  GraduationCap,
+  BookOpen,
+  Mail,
+  Lock
+} from "lucide-react";
+import { UserType } from "../Models/types";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 
 interface LoginViewProps {
   onLogin: (email: string, password: string, userType: UserType) => Promise<void>;
@@ -8,85 +16,117 @@ interface LoginViewProps {
 }
 
 export const LoginView: React.FC<LoginViewProps> = ({ onLogin, isLoading }) => {
-  const [userType, setUserType] = useState<UserType>('student');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userType, setUserType] = useState<UserType>("student");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (): Promise<void> => {
     await onLogin(email, password, userType);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-indigo-600 rounded-full mb-4">
-            <GraduationCap className="w-8 h-8 text-white" />
+    <div
+      className="d-flex align-items-center justify-content-center min-vh-100 p-4"
+      style={{
+        background: "linear-gradient(135deg, #eff6ff, #eef2ff, #f3e8ff)",
+      }}
+    >
+      <div className="w-100" style={{ maxWidth: "450px" }}>
+        {/* Header */}
+        <div className="text-center mb-4">
+          <div
+            className="d-inline-flex align-items-center justify-content-center rounded-circle mb-3"
+            style={{
+              width: "64px",
+              height: "64px",
+              backgroundColor: "#4f46e5",
+            }}
+          >
+            <GraduationCap className="text-white" size={32} />
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Office Hours Portal</h1>
-          <p className="text-gray-600">Sign in to manage or book office hours</p>
+          <h1 className="fw-bold text-dark fs-3">Office Hours Portal</h1>
+          <p className="text-muted">Sign in to manage or book office hours</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <div className="grid grid-cols-2 gap-3 mb-6">
-            <button
-              onClick={() => setUserType('student')}
-              className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
-                userType === 'student' ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 text-gray-600'
-              }`}
-            >
-              <BookOpen className="w-8 h-8 mb-2" />
-              <span className="font-semibold">Student</span>
-            </button>{/*student button*/}
-            
-            <button
-              onClick={() => setUserType('professor')}
-              className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
-                userType === 'professor' ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-200 text-gray-600'
-              }`}
-            >
-              <GraduationCap className="w-8 h-8 mb-2" />
-              <span className="font-semibold">Professor</span>
-            </button>{/*professor button*/}
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={`${userType}@university.edu`}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 outline-none"
-                />
-              </div>
+        {/* Card */}
+        <div className="bg-white rounded-4 shadow p-4 p-md-5">
+          {/* User Type Switch */}
+          <div className="row g-2 mb-4">
+            <div className="col-6">
+              <button
+                className={`w-100 p-3 border rounded text-center ${
+                  userType === "student"
+                    ? "border-primary bg-primary bg-opacity-10 text-primary"
+                    : "border-secondary text-secondary bg-light"
+                }`}
+                onClick={() => setUserType("student")}
+              >
+                <BookOpen size={28} className="mb-2" />
+                <div className="fw-semibold">Student</div>
+              </button>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password"
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 outline-none"
-                />
-              </div>
+            <div className="col-6">
+              <button
+                className={`w-100 p-3 border rounded text-center ${
+                  userType === "professor"
+                    ? "border-primary bg-primary bg-opacity-10 text-primary"
+                    : "border-secondary text-secondary bg-light"
+                }`}
+                onClick={() => setUserType("professor")}
+              >
+                <GraduationCap size={28} className="mb-2" />
+                <div className="fw-semibold">Professor</div>
+              </button>
             </div>
-
-            <button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 disabled:opacity-50"
-            >
-              {isLoading ? 'Signing in...' : `Sign In as ${userType === 'student' ? 'Student' : 'Professor'}`}
-            </button>{/*Submit button*/}
           </div>
+
+          {/* Email */}
+          <div className="mb-3">
+            <label className="form-label fw-semibold">Email</label>
+            <div className="position-relative">
+              <Mail
+                size={18}
+                className="position-absolute"
+                style={{ top: "50%", left: "12px", transform: "translateY(-50%)", color: "#9ca3af" }}
+              />
+              <input
+                type="email"
+                className="form-control ps-5 py-2"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={`${userType}@university.edu`}
+              />
+            </div>
+          </div>
+
+          {/* Password */}
+          <div className="mb-4">
+            <label className="form-label fw-semibold">Password</label>
+            <div className="position-relative">
+              <Lock
+                size={18}
+                className="position-absolute"
+                style={{ top: "50%", left: "12px", transform: "translateY(-50%)", color: "#9ca3af" }}
+              />
+              <input
+                type="password"
+                className="form-control ps-5 py-2"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter password"
+              />
+            </div>
+          </div>
+
+          {/* Submit */}
+          <button
+            className="btn btn-primary w-100 py-2 fw-semibold"
+            disabled={isLoading}
+            onClick={handleSubmit}
+          >
+            {isLoading ? "Signing in..." : `Sign In as ${userType === "student" ? "Student" : "Professor"}`}
+          </button>
         </div>
       </div>
     </div>
