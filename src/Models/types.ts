@@ -1,4 +1,4 @@
-//Initializes Student and Professor user objects
+//Initializes Student, Professor, authentication, OfficeHour, Apointment skeletons
 
 export type UserType = 'student' | 'professor';
 
