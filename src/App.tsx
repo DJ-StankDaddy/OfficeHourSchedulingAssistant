@@ -1,11 +1,24 @@
 import React, { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import './index.css'
+import {useAuthController} from './Controllers/useAuthController'
+import {LoginView} from './Views/LoginView'
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      </div>)
+ const authController = useAuthController();
+  //const officeHoursController = useOfficeHoursController();
+  /*const appointmentsController = useAppointmentsController(
+    authController.authState.user?.id || null,
+    authController.authState.user?.userType || 'student'
+  );*/
+  if (!authController.authState.isAuthenticated) {
+    return (
+      <LoginView
+        onLogin={authController.login}
+        isLoading={authController.isLoading}
+      />
+    );
+  }
 };
 
 

@@ -1,3 +1,5 @@
+import {User, UserType} from '../Models/types'
+
 class ApiService {
     // Simulate API delay
     private delay(ms: number): Promise<void> {
@@ -17,4 +19,4 @@ class ApiService {
 }
 
 //instantiates an ApiService object
-const apiService = new ApiService; 
+export const apiService = new ApiService; 

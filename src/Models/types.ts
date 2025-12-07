@@ -1,15 +1,15 @@
 //Initializes Student and Professor user objects
 
-type UserType = 'student' | 'professor';
+export type UserType = 'student' | 'professor';
 
-interface User{
+export interface User{
     id: number;
     email: string; 
     userType: UserType;
     name: string; 
 }
 
-interface AuthState {
+export interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
 }

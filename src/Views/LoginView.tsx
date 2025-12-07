@@ -1,14 +1,13 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState } from 'react';
 import { GraduationCap, BookOpen, Mail, Lock, ArrowRight, Calendar, Clock, MapPin, Users, Bell, CheckCircle, Plus, X, Search } from 'lucide-react';
-
-type UserType = 'student' | 'professor';
+import {UserType} from '../Models/types'
 
 interface LoginViewProps {
   onLogin: (email: string, password: string, userType: UserType) => Promise<void>;
   isLoading: boolean;
 }
 
-const LoginView: React.FC<LoginViewProps> = ({ onLogin, isLoading }) => {
+export const LoginView: React.FC<LoginViewProps> = ({ onLogin, isLoading }) => {
   const [userType, setUserType] = useState<UserType>('student');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -38,7 +37,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onLogin, isLoading }) => {
             >
               <BookOpen className="w-8 h-8 mb-2" />
               <span className="font-semibold">Student</span>
-            </button>
+            </button>{/*student button*/}
             
             <button
               onClick={() => setUserType('professor')}
@@ -48,7 +47,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onLogin, isLoading }) => {
             >
               <GraduationCap className="w-8 h-8 mb-2" />
               <span className="font-semibold">Professor</span>
-            </button>
+            </button>{/*professor button*/}
           </div>
 
           <div className="space-y-4">
@@ -86,7 +85,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onLogin, isLoading }) => {
               className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 disabled:opacity-50"
             >
               {isLoading ? 'Signing in...' : `Sign In as ${userType === 'student' ? 'Student' : 'Professor'}`}
-            </button>
+            </button>{/*Submit button*/}
           </div>
         </div>
       </div>
