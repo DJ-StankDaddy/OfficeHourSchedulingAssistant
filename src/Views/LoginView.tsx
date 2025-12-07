@@ -17,8 +17,8 @@ interface LoginViewProps {
 
 export const LoginView: React.FC<LoginViewProps> = ({ onLogin, isLoading }) => {
   const [userType, setUserType] = useState<UserType>("student");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(""); //TODO: user input to set email
+  const [password, setPassword] = useState(""); //TODO: user input to set password
 
   const handleSubmit = async (): Promise<void> => {
     await onLogin(email, password, userType);
